@@ -3,6 +3,7 @@ package progtetelek;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +40,8 @@ public class Main {
         feladat4();
         feladat5();
         feladat6();
+        feladat7();
+        feladat8();
     }
 
     private void feladat1() throws IOException {
@@ -94,8 +97,43 @@ public class Main {
         while (i < fuvarok.length && "bankkártya".equals(fuvarok[i].getFizetes_modja())) {
             i++;
         }
-        boolean mind = i >= fuvarok.length;
-        System.out.println(mind + " "+ i);
+        System.out.println(i >= fuvarok.length ? "igen" : "nem");
+    }
+
+    private void feladat7() {
+        System.out.println("7. feladat: minden készpénzes fizetésnél 0 borravaló?");
+        //eldöntés tétele
+    }
+
+    private void feladat8() throws IOException {
+        System.out.println("8/1. feladat: készpénzes fuvarok listája, konzolon és fájlban?");
+        List<Fuvar> kpFuvarok = new ArrayList<>();
+        for (Fuvar fuvar : fuvarok) {
+            if(fuvar.getFizetes_modja().equals("készpénz")){
+                kpFuvarok.add(fuvar);
+            }
+        }
+        
+        assert kpFuvarok.size() > 0: "üres a lista";
+        String kimenet = "";
+        //System.out.println(kpFuvarok);
+        for (Fuvar fuvar : kpFuvarok) {
+            //System.out.println(fuvar);
+            kimenet += fuvar +"\n";
+        }
+        //System.out.println(kimenet);
+        Files.writeString(Path.of("kpFuvarok.txt"), kimenet);
+        System.out.println("fájba kiírva!");
+        
+        System.out.println("8/2. feladat: milyen fiz mód vannak rögzítve?");
+        
+        
+        System.out.println("8/3. feladat: különböző fizetési módokból mennyi van?");
+        String[] fizMod = new String[fuvarok.length - 1];
+        int[] db = new int[fuvarok.length - 1];
+        for (int i = 0; i < fuvarok.length; i++) {
+            
+        }
     }
 
 }
