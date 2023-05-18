@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -109,30 +111,38 @@ public class Main {
         System.out.println("8/1. feladat: készpénzes fuvarok listája, konzolon és fájlban?");
         List<Fuvar> kpFuvarok = new ArrayList<>();
         for (Fuvar fuvar : fuvarok) {
-            if(fuvar.getFizetes_modja().equals("készpénz")){
+            if (fuvar.getFizetes_modja().equals("készpénz")) {
                 kpFuvarok.add(fuvar);
             }
         }
-        
-        assert kpFuvarok.size() > 0: "üres a lista";
+
+        assert kpFuvarok.size() > 0 : "üres a lista";
         String kimenet = "";
         //System.out.println(kpFuvarok);
         for (Fuvar fuvar : kpFuvarok) {
             //System.out.println(fuvar);
-            kimenet += fuvar +"\n";
+            kimenet += fuvar + "\n";
         }
         //System.out.println(kimenet);
         Files.writeString(Path.of("kpFuvarok.txt"), kimenet);
         System.out.println("fájba kiírva!");
-        
+
         System.out.println("8/2. feladat: milyen fiz mód vannak rögzítve?");
+        //hashset azonos elemeket nem tárolja
+        HashSet<String> fizModok = new HashSet<>();
+        for (Fuvar fuvar : fuvarok) {
+            fizModok.add(fuvar.getFizetes_modja());
+        }
         
+        for (String fizMod : fizModok) {
+            System.out.println(fizMod);
+        }
         
         System.out.println("8/3. feladat: különböző fizetési módokból mennyi van?");
         String[] fizMod = new String[fuvarok.length - 1];
         int[] db = new int[fuvarok.length - 1];
         for (int i = 0; i < fuvarok.length; i++) {
-            
+
         }
     }
 
