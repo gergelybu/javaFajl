@@ -18,7 +18,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException, ParseException {
         new Main().feladatok();
-
     }
 
     private void feladatok() throws IOException, ParseException {
@@ -51,7 +50,7 @@ public class Main {
     }
 
     private void feladat4() {
-        System.out.println("4. feladat: készpénzes fizetések száma");
+        System.out.println("4. feladat: ");
     }
 
 }

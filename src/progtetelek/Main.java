@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public class Main {
 
@@ -39,10 +41,12 @@ public class Main {
         feladat1();
         feladat2();
         feladat3();
+        //prog tételek
         feladat4();
         feladat5();
         feladat6();
         feladat7();
+        //adatszerkezetek
         feladat8();
     }
 
@@ -104,7 +108,11 @@ public class Main {
 
     private void feladat7() {
         System.out.println("7. feladat: minden készpénzes fizetésnél 0 borravaló?");
-        //eldöntés tétele
+        int i = 0;
+        while (i < fuvarok.length && "készpénz".equals(fuvarok[i].getFizetes_modja()) /*&& fuvarok[i].getBorravalo() == 0*/) {
+            i++;
+        }
+        System.out.println(i >= fuvarok.length ? "igen" : "nem");
     }
 
     private void feladat8() throws IOException {
@@ -115,8 +123,8 @@ public class Main {
                 kpFuvarok.add(fuvar);
             }
         }
-
         assert kpFuvarok.size() > 0 : "üres a lista";
+
         String kimenet = "";
         //System.out.println(kpFuvarok);
         for (Fuvar fuvar : kpFuvarok) {
@@ -128,21 +136,35 @@ public class Main {
         System.out.println("fájba kiírva!");
 
         System.out.println("8/2. feladat: milyen fiz mód vannak rögzítve?");
-        //hashset azonos elemeket nem tárolja
-        HashSet<String> fizModok = new HashSet<>();
+        //hashset azonos elemeket egyszer tárolja
+        Set<String> fizModok = new HashSet<>();
         for (Fuvar fuvar : fuvarok) {
             fizModok.add(fuvar.getFizetes_modja());
         }
-        
         for (String fizMod : fizModok) {
             System.out.println(fizMod);
         }
-        
-        System.out.println("8/3. feladat: különböző fizetési módokból mennyi van?");
-        String[] fizMod = new String[fuvarok.length - 1];
-        int[] db = new int[fuvarok.length - 1];
-        for (int i = 0; i < fuvarok.length; i++) {
 
+        System.out.println("8/3. feladat: különböző fizetési módokból mennyi van?");
+        Map<String, Integer> fizModDb = new HashMap<>();
+        for (Fuvar fuvar : fuvarok) {
+            String kulcs = fuvar.getFizetes_modja();
+            if (fizModDb.containsKey(kulcs)) {
+                int ertek = fizModDb.get(kulcs);
+                fizModDb.put(kulcs, ++ertek);
+                
+            } else {
+                fizModDb.put(kulcs, 1);
+            }
+
+        }
+        assert fizModDb.get("bankkártya") > 1 : "hibás map";
+        assert fizModDb.get("készpénz") == kpFuvarok.size() : "kp ->hibás map";
+        
+        for (Map.Entry<String, Integer> entry : fizModDb.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            System.out.printf("%-11s: %4d db\n", key, value);
         }
     }
 
